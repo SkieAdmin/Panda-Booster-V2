@@ -14,7 +14,7 @@
             </Grid.RowDefinitions>
             <Border x:Name="UI_DragHandle" CornerRadius="15" Margin="0,0,0,79" Background="#FF181818" MouseDown="UI_DragHandle_MouseDown"></Border>
             <Grid Margin="0,16,0,79" MouseDown="UI_DragHandle_MouseDown" Background="#FF181818"></Grid>
-            <Label Content="Panda Booster V2" Foreground="White" Margin="10,3,416,84" FontFamily="Teko" FontSize="15"></Label>
+            <Label Content="Panda Booster V2" Foreground="White" Margin="10,3,370,84" FontFamily="Teko" FontSize="15"></Label>
             <Border x:Name="Exitbtn" CornerRadius="15" BorderThickness="1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="19" Margin="484,7,0,0" Background="#FFCD0E0E" MouseDown="Exitbtn_MouseDown"  RenderTransformOrigin="12.084,0.71"/>
             <Border x:Name="Minimize" CornerRadius="15" BorderThickness="1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="19" Margin="460,7,0,0" Background="#FFCD990E" MouseDown="Minimize_MouseDown"  RenderTransformOrigin="12.084,0.71"/>
             <Label Content="Before we get started, please enter your key or if you don't have a key then click get key." Foreground="White" Margin="41,49,39,35" FontFamily="Teko Medium" FontSize="15"/>

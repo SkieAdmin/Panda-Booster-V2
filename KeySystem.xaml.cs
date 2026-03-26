@@ -31,7 +31,7 @@ namespace Panda_Booster_V2
 
 		private void GetKeyBTN_Click(object sender, RoutedEventArgs e)
 		{
-			Panda.Auth.LaunchSecureBrowser("https://pandatechnology.xyz", "test" /*KeySystemLib.PandaKeyLib.Utilities.ComputeHash(HWID)*/, "speedhub");
+			Panda.Auth.LaunchSecureBrowser("pandadevkit", "rawrr");
 		}
 
 		private void UI_DragHandle_MouseDown(object sender, MouseButtonEventArgs e)
@@ -67,7 +67,7 @@ namespace Panda_Booster_V2
 		private void ValidateKeyBTN_Click(object sender, RoutedEventArgs e)
 		{
 			string KeyBox = KeyInput.Text;
-			if (Panda.Auth.Validate("https://pandatechnology.xyz", "test", "speedhub", KeyBox))
+			if (Panda.Auth.Validate("pandadevkit", KeyBox, "test"))
 			{
 				File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "./PandaConfig/Key.cfg", KeyBox);
 				new MainWindow().Show();

@@ -1,92 +1,129 @@
-﻿using System;
-using System.Net;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Text;
 
 namespace Panda
 {
-    public static class Auth
+    public class ValidationResult
     {
+        public bool Success { get; set; }
+        public bool IsPremium { get; set; }
+        public string ExpireDate { get; set; }
+        public string Message { get; set; }
+    }
 
-        public static void LaunchSecureBrowser(string URL, string HWID, string Exploit)
+    public class PandaKeySystem
+    {
+        private static readonly HttpClient _http = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
+        private readonly string _serviceId;
+        public const string BaseUrl = "https://new.pandadevelopment.net";
+
+        public PandaKeySystem(string serviceId)
         {
-            using (var process = new Process())
-            {
-                process.StartInfo.FileName = "msedge.exe";
-                process.StartInfo.Arguments = $"--guest \"{URL}/getkey?service={Exploit}&hwid={HWID}\"";
+            _serviceId = serviceId;
+        }
 
-                try
+        public ValidationResult Validate(string key, string hwid, bool premiumVerification = false)
+        {
+            try
+            {
+                var body = JsonConvert.SerializeObject(new
                 {
-                    process.Start();
-                }
-                catch
+                    ServiceID = _serviceId,
+                    Key = key,
+                    HWID = hwid
+                });
+
+                var content = new StringContent(body, Encoding.UTF8, "application/json");
+                var response = _http.PostAsync($"{BaseUrl}/api/v1/keys/validate", content).Result;
+                var json = response.Content.ReadAsStringAsync().Result;
+                var result = JsonConvert.DeserializeObject<ServerResponse>(json);
+
+                bool isAuthenticated = result.Authenticated_Status == "Success";
+                bool isPremium = result.Key_Premium;
+
+                bool isValid = isAuthenticated;
+                string message = result.Note ?? (isAuthenticated ? "Key validated!" : "Invalid key");
+
+                if (premiumVerification && isAuthenticated && !isPremium)
                 {
-                    process.StartInfo.FileName = $"{URL}/getkey?service={Exploit}&hwid={HWID}";
-                    process.Start();
+                    isValid = false;
+                    message = "Premium key required";
                 }
+
+                return new ValidationResult
+                {
+                    Success = isValid,
+                    Message = message,
+                    IsPremium = isPremium,
+                    ExpireDate = result.Expire_Date
+                };
+            }
+            catch
+            {
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "Failed to connect to server",
+                    IsPremium = false,
+                    ExpireDate = null
+                };
             }
         }
 
-        public static bool Validate(string URL, string HWID, string Exploit, string Key)
+        public string GetKeyURL(string hwid)
         {
-            using (var WB = new WebClient() { Proxy = null })
+            return $"{BaseUrl}/getkey/{_serviceId}?hwid={hwid}";
+        }
+
+        private class ServerResponse
+        {
+            public string Authenticated_Status { get; set; }
+            public string Note { get; set; }
+            public string Expire_Date { get; set; }
+            public bool Key_Premium { get; set; }
+        }
+    }
+
+    public static class Auth
+    {
+        public static void LaunchSecureBrowser(string serviceId, string hwid)
+        {
+            var url = $"{PandaKeySystem.BaseUrl}/getkey/{serviceId}?hwid={hwid}";
+
+            var process = new Process();
+            process.StartInfo.UseShellExecute = true;
+            try
             {
-                WB.Headers.Add("User-Agent", "Auth-Client/1.0");
+                process.StartInfo.FileName = "msedge.exe";
+                process.StartInfo.Arguments = $"--guest \"{url}\"";
+                process.Start();
+            }
+            catch
+            {
+                process.StartInfo.FileName = url;
+                process.StartInfo.Arguments = "";
+                process.Start();
+            }
+        }
 
-                var Result = "";
-                var Blob = $"{Guid.NewGuid()}{Guid.NewGuid()}";
+        public static bool Validate(string serviceId, string key, string hwid, bool premiumOnly = false)
+        {
+            var panda = new PandaKeySystem(serviceId);
+            var result = panda.Validate(key, hwid, premiumVerification: premiumOnly);
 
-                try
-                {
-                    //Result = WB.DownloadString($"{URL}/validate?service={Exploit}&key={Key}&blob={Blob}&hwid={HWID}");
-                    WebClient webkit = new WebClient();
-                    //webkit.Headers.Add("User-Agent", "Auth-Client/1.0");
-                    webkit.Proxy = null;
-                    string url = URL + "/validate?service=" + Exploit + "&key=" + Key + "&blob=" + Blob + "&hwid=" + HWID;
-                    Clipboard.SetText(url);
-                    Result = webkit.DownloadString(url);
-                }
-                catch
-                {
-                    MessageBox.Show($"Connection to {URL} has failed!", "Authentication Client", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-                MessageBox.Show(Result);
-                //Clipboard.SetText(Blob);
-                var Buffer = Result.Split('#');
-                var Parsed = new List<int>();
+            if (result.Success)
+            {
+                Console.WriteLine("Authenticated!");
+                Console.WriteLine($"Premium: {result.IsPremium}");
+                Console.WriteLine($"Expires: {result.ExpireDate ?? "Never"}");
+                return true;
+            }
 
-                if (Result.Length > 5)
-                {
-                    for (int i = 0; i < Buffer.Length; i += 2)
-                    {
-                        try
-                        {
-                            Parsed.Add(Int32.Parse(Buffer[i]));
-                        }
-                        catch
-                        {
-                            MessageBox.Show($"Server has returned malformed data!", "Authentication Client", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return false;
-                        }
-                    }
-
-                    var Integer = 0;
-                    foreach (int Value in Parsed)
-                    {
-                        if (((int)Key[Integer] * (int)Blob[Integer]) - ((int)Blob[Integer] + (int)Key[Integer]) != Value)
-                            return false;
-
-                        ++Integer;
-                    }
-
-                    return true;
-
-                }
-                else
-                    return false;
-            };
+            Console.WriteLine($"Failed: {result.Message}");
+            return false;
         }
     }
 }
