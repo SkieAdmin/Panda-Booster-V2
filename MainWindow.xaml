@@ -109,15 +109,25 @@
                 <RowDefinition Height="111*"/>
             </Grid.RowDefinitions>
             <Grid/>
+            <Image Margin="210,48,-116,0" Source="/img-X0Rr9QGyDru9ULr08gGmn-removebg-preview.png" Opacity="0.2" Stretch="Fill" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.476"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
             <Border x:Name="UI_DragHandle" CornerRadius="15" Margin="0,0,0,174" Background="#FF181818" MouseDown="UI_DragHandle_MouseDown"/>
             <Grid Margin="0,16,0,166" MouseDown="UI_DragHandle_MouseDown" Background="#FF181818"/>
             <Label Content="Panda Booster V2" Foreground="White" Margin="10,0,416,166" FontFamily="Teko" FontSize="18"/>
             <Border x:Name="Exitbtn" CornerRadius="15" BorderThickness="1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="19" Margin="578,10,0,0" Background="#FFCD0E0E" MouseDown="Exitbtn_MouseDown"  RenderTransformOrigin="12.084,0.71"/>
             <Border x:Name="Minimize" CornerRadius="15" BorderThickness="1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="19" Margin="554,10,0,0" Background="#FFCD990E" MouseDown="Minimize_MouseDown"  RenderTransformOrigin="12.084,0.71"/>
             <RadioButton Checked="ServerSelecton_Checked" x:Name="DefaultServer" Style="{DynamicResource APISelectionn}" Margin="16,52,526,124"/>
-            <Label Content="Original Server" Foreground="White" Margin="73,52,416,123" FontFamily="Teko Medium" FontSize="15"/>
+            <Label Content="Default DNS" Foreground="White" Margin="73,52,416,123" FontFamily="Teko Medium" FontSize="15"/>
             <RadioButton x:Name="ServerOne" Checked="ServerSelecton_Checked" Style="{DynamicResource APISelectionn}" Margin="16,85,526,92"/>
-            <Label Content="Server #1" Foreground="White" Margin="74,82,421,95" FontFamily="Teko Medium" FontSize="15" RenderTransformOrigin="0.5,0.5">
+            <Label Content="DNS #1" Foreground="White" Margin="74,82,421,95" FontFamily="Teko Medium" FontSize="15" RenderTransformOrigin="0.5,0.5">
                 <Label.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -128,21 +138,21 @@
                 </Label.RenderTransform>
             </Label>
             <RadioButton x:Name="ServerTwo" Checked="ServerSelecton_Checked" Style="{DynamicResource APISelectionn}" Margin="16,117,526,60"/>
-            <Label Content="Server #2" Foreground="White" Margin="74,115,470,60" FontFamily="Teko Medium" FontSize="15"/>
+            <Label Content="DNS #2" Foreground="White" Margin="74,115,441,60" FontFamily="Teko Medium" FontSize="15"/>
             <RadioButton x:Name="ServerThree" Checked="ServerSelecton_Checked" Style="{DynamicResource APISelectionn}" Margin="17,149,525,22"/>
-            <Label Content="Server #3" Foreground="White" Margin="74,150,469,28" FontFamily="Teko Medium" FontSize="15"/>
+            <Label Content="DNS #3" Foreground="White" Margin="74,150,450,28" FontFamily="Teko Medium" FontSize="15"/>
             <RadioButton x:Name="ServerFour" Checked="ServerSelecton_Checked" Style="{DynamicResource APISelectionn}" Margin="212,50,338,126"/>
-            <Label Content="Server #4" Foreground="White" Margin="273,50,263,125" FontFamily="Teko Medium" FontSize="15"/>
+            <Label Content="DNS #4" Foreground="White" Margin="273,50,263,125" FontFamily="Teko Medium" FontSize="15"/>
             <RadioButton x:Name="ServerFive" Checked="ServerSelecton_Checked" Style="{DynamicResource APISelectionn}" Margin="212,81,339,91"/>
-            <Label Content="Server #5" Foreground="White" Margin="273,84,256,95" FontFamily="Teko Medium" FontSize="15"/>
+            <Label Content="DNS #5" Foreground="White" Margin="273,84,256,95" FontFamily="Teko Medium" FontSize="15"/>
             <RadioButton x:Name="ServerSix" Checked="ServerSelecton_Checked" Style="{DynamicResource APISelectionn}" Margin="210,117,340,58"/>
-            <Label Content="Server #6" Foreground="White" Margin="270,117,256,59" FontFamily="Teko Medium" FontSize="15"/>
+            <Label Content="DNS #6" Foreground="White" Margin="270,117,256,59" FontFamily="Teko Medium" FontSize="15"/>
 
             <RichTextBox x:Name="ConsoleBox" Margin="10,25,19,22" Background="#FF212121" IsReadOnly="True" Foreground="White" Grid.Row="1" IsDocumentEnabled="True" FontSize="9"/>
 
             <Label Margin="10,5,450,79" Content="Console" Foreground="White" Grid.Row="1" FontSize="10"/>
             <RadioButton x:Name="ServerSeven" Checked="ServerSelecton_Checked" Style="{DynamicResource APISelectionn}" Margin="210,150,340,26"/>
-            <Label Content="Server #7" Foreground="White" Margin="270,150,264,28" FontFamily="Teko Medium" FontSize="15"/>
+            <Label Content="DNS #7" Foreground="White" Margin="270,150,264,28" FontFamily="Teko Medium" FontSize="15"/>
             <Label Content="Panda-Pelican Development. All Right in Service" Foreground="White" Margin="439,110,10,-7" FontFamily="Teko Medium" FontSize="7" Grid.Row="1" Opacity="0.2"/>
 
         </Grid>

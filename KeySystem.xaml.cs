@@ -53,17 +53,17 @@ namespace Panda_Booster_V2
 
 		private void AutoValidate(string text)
 		{
-			//if (KeySystemAPI.Security.Validate("https://pandatechnology.xyz", "test", "pandadevkit", text))
-			//{
-			//	File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "./PandaConfig/Key.cfg", text);
-			//	new MainWindow().Show();
-			//	this.Close();
-			//}
-			//else
-			//{
-			//	MessageBox.Show("Key not valid");
-			//}
-		}
+            string KeyBox = text;
+            if (Panda.Auth.Validate("pandadevkit", KeyBox, "test"))
+            {
+                new MainWindow().Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("The Key is no longer valid, Please Obtain New Key", "Panda", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
 		private void ValidateKeyBTN_Click(object sender, RoutedEventArgs e)
 		{
 			string KeyBox = KeyInput.Text;

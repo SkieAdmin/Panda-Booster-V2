@@ -18,9 +18,9 @@
             <Border x:Name="Exitbtn" CornerRadius="15" BorderThickness="1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="19" Margin="484,7,0,0" Background="#FFCD0E0E" MouseDown="Exitbtn_MouseDown"  RenderTransformOrigin="12.084,0.71"/>
             <Border x:Name="Minimize" CornerRadius="15" BorderThickness="1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="19" Margin="460,7,0,0" Background="#FFCD990E" MouseDown="Minimize_MouseDown"  RenderTransformOrigin="12.084,0.71"/>
             <Label Content="Before we get started, please enter your key or if you don't have a key then click get key." Foreground="White" Margin="41,49,39,35" FontFamily="Teko Medium" FontSize="15"/>
-            <TextBox x:Name="KeyInput" Margin="29,84,15,3" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" Foreground="White" Text="KEY GOES HERE"/>
-            <Button x:Name="GetKeyBTN" Click="GetKeyBTN_Click"  Margin="135,10,261,33" Grid.Row="1" Background="{x:Null}" Content="Get Key" Foreground="White" FontFamily="Teko" FontSize="14"/>
-            <Button x:Name="ValidateKeyBTN" Click="ValidateKeyBTN_Click" Margin="270,10,126,33" Grid.Row="1" Background="{x:Null}" Content="Enter" Foreground="White" FontFamily="Teko" FontSize="14"/>
+            <TextBox x:Name="KeyInput" Margin="29,84,15,10" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" Foreground="White" Text="KEY GOES HERE"/>
+            <Button x:Name="GetKeyBTN" Click="GetKeyBTN_Click"  Margin="246,109,150,48" Background="{x:Null}" Content="Get Key" Foreground="White" FontFamily="Teko" FontSize="14" Grid.RowSpan="2"/>
+            <Button x:Name="ValidateKeyBTN" Click="ValidateKeyBTN_Click" Margin="381,109,15,48" Background="{x:Null}" Content="Enter" Foreground="White" FontFamily="Teko" FontSize="14" Grid.RowSpan="2"/>
         </Grid>
     </Border>
 </Window>
